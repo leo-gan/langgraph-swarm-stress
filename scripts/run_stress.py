@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import logging
 from pathlib import Path
-from stress.swarm_app import run_swarm
+
 from stress.config import CONFIG
+from stress.swarm_app import run_swarm
+
 
 def main():
     # Set up logging
@@ -14,13 +16,14 @@ def main():
         format="[%(asctime)s] %(levelname)s: %(message)s",
         handlers=[
             logging.FileHandler(log_dir / "swarm_run.log"),
-            logging.StreamHandler()
-        ]
+            logging.StreamHandler(),
+        ],
     )
 
     logging.info("=== Starting LangGraph Swarm Stress Test ===")
     run_swarm(CONFIG)
     logging.info("=== Finished LangGraph Swarm Stress Test ===")
+
 
 if __name__ == "__main__":
     main()

@@ -1,13 +1,18 @@
 import logging
 import random
 import time
+
+from langgraph_swarm import create_swarm
+
 from stress.agent_stub import StubAgent
+from stress.agent_stub_graph import StubAgentGraph
 from stress.patterns import spawn_pattern
 from stress.stats import StatsMonitor
-from langgraph_swarm import create_swarm
+
 
 class LGAgent:
     """Wrapper for a stub agent to work with LangGraph Swarm"""
+
     def __init__(self, stub_agent: StubAgent, name: str):
         self.stub = stub_agent
         self.name = name
@@ -15,8 +20,6 @@ class LGAgent:
     def __call__(self, state: dict):
         return self.stub.act(state)
 
-from stress.stats import StatsMonitor
-from stress.agent_stub_graph import StubAgentGraph  # <-- use StateGraph wrapper
 
 def build_agents(config):
     agents = []
@@ -26,6 +29,7 @@ def build_agents(config):
         agent = StubAgentGraph(i, ttl, mem, event_logger=None)
         agents.append(agent)
     return agents
+
 
 def run_swarm(config):
     logging.info(f"[Swarm] Starting with {config['num_agents']} agents")
@@ -45,10 +49,10 @@ def run_swarm(config):
     # Create LangGraph swarm workflow using proper agent objects
     workflow = create_swarm(
         agents,  # list of StubAgentGraph objects
-        default_active_agent="agent-0"  # string matching one of the agents
+        default_active_agent="agent-0",  # string matching one of the agents
     )
 
-    app = workflow.compile(checkpointer=None)
+    workflow.compile(checkpointer=None)
 
     stats.start()
 

@@ -1,6 +1,13 @@
 # stress/stats.py
-import threading, time, logging, psutil, json, csv
+import csv
+import json
+import logging
+import threading
+import time
 from pathlib import Path
+
+import psutil
+
 
 class StatsMonitor:
     def __init__(self, swarm, interval=5, outdir="logs"):

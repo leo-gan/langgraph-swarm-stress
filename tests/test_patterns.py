@@ -1,8 +1,11 @@
 # tests/test_patterns.py
-import pytest
-from unittest.mock import MagicMock, call
-from stress.patterns import spawn_pattern
 import time
+from unittest.mock import MagicMock, call
+
+import pytest
+
+from stress.patterns import spawn_pattern
+
 
 @pytest.fixture
 def mock_sleep(monkeypatch):
@@ -11,6 +14,7 @@ def mock_sleep(monkeypatch):
     monkeypatch.setattr(time, "sleep", mock)
     return mock
 
+
 def create_mock_workflow(num_agents):
     """Helper to create a mock workflow with a specific number of agents."""
     workflow = MagicMock()
@@ -18,6 +22,7 @@ def create_mock_workflow(num_agents):
         {"id": f"agent_{i}", "entrypoint": MagicMock()} for i in range(num_agents)
     ]
     return workflow
+
 
 def test_spawn_pattern_all_at_once(mock_sleep):
     """Test the 'all_at_once' spawn pattern."""
@@ -34,6 +39,7 @@ def test_spawn_pattern_all_at_once(mock_sleep):
         agent["entrypoint"].assert_called_once_with({})
 
     mock_sleep.assert_not_called()
+
 
 def test_spawn_pattern_bursts(mock_sleep):
     """Test the 'bursts' spawn pattern."""
@@ -78,6 +84,7 @@ def test_spawn_pattern_linear(mock_sleep):
     # 5 agents over 10s = 2s interval
     assert mock_sleep.call_count == 5
     mock_sleep.assert_has_calls([call(2.0), call(2.0), call(2.0), call(2.0), call(2.0)])
+
 
 def test_spawn_pattern_unknown(mock_sleep):
     """Test that an unknown pattern defaults to 'all_at_once'."""

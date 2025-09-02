@@ -1,5 +1,7 @@
 # stress/agent_stub.py
-import time, logging
+import logging
+import time
+
 
 class StubAgent:
     def __init__(self, agent_id: int, ttl: int, memory_mb: int, event_logger=None):
@@ -13,7 +15,9 @@ class StubAgent:
     def act(self, state: dict) -> dict:
         if self.start_time is None:
             self.start_time = time.time()
-            logging.info(f"[Agent-{self.id}] Start | ttl={self.ttl}s | mem={self.memory_mb}MB")
+            logging.info(
+                f"[Agent-{self.id}] Start | ttl={self.ttl}s | mem={self.memory_mb}MB"
+            )
             self.memory = ["x" * 1024 * 1024] * self.memory_mb
 
             if self.event_logger:

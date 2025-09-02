@@ -1,11 +1,12 @@
 # stress/swarm_runner.py
-import logging, time, random
-from stress.agent_stub import StubAgent
-from stress.patterns import spawn_agents
+import logging
+
+from stress.patterns import spawn_pattern
+
 
 def run_swarm(config):
     logging.info(f"[Swarm] Starting with {config['num_agents']} agents")
-    agents = spawn_agents(config)
+    agents = spawn_pattern(config)
 
     # Run until all agents expire
     for agent in agents:

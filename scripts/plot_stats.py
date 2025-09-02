@@ -1,8 +1,10 @@
 # scripts/plot_stats.py
 import argparse
 import json
-import matplotlib.pyplot as plt
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+
 
 def plot_stats(json_file: Path, outdir: Path = None):
     with open(json_file) as f:
@@ -53,7 +55,9 @@ def plot_stats(json_file: Path, outdir: Path = None):
     ax2 = ax1.twinx()
     ax2.set_ylabel("CPU / Memory (%)", color="tab:red")
     ax2.plot(times, cpu, label="CPU %", color="tab:red", linestyle="--", linewidth=1.5)
-    ax2.plot(times, mem, label="MEM %", color="tab:orange", linestyle=":", linewidth=1.5)
+    ax2.plot(
+        times, mem, label="MEM %", color="tab:orange", linestyle=":", linewidth=1.5
+    )
     ax2.tick_params(axis="y", labelcolor="tab:red")
 
     # Add start/stop markers on top of spans
@@ -66,13 +70,11 @@ def plot_stats(json_file: Path, outdir: Path = None):
     lines, labels = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
     legend = ax1.legend(
-        lines + lines2,
-        labels + labels2,
-        loc="upper right",
-        title="Metrics"
+        lines + lines2, labels + labels2, loc="upper right", title="Metrics"
     )
 
     import matplotlib.patches as mpatches
+
     span_patch = mpatches.Patch(color="green", alpha=0.1, label="Agent Lifetime")
     ax1.legend(handles=legend.legend_handles + [span_patch], loc="upper right")
 
@@ -91,8 +93,12 @@ def plot_stats(json_file: Path, outdir: Path = None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Plot swarm stress stats")
-    parser.add_argument("json_file", type=Path, help="Path to stats JSON log")
-    parser.add_argument("--outdir", type=Path, help="Directory to save plot instead of showing it")
+    # parser.add_argument("json_file", type=Path, help="Path to stats JSON log")
+    parser.add_argument(
+        "--outdir", type=Path, help="Directory to save plot instead of showing it"
+    )
     args = parser.parse_args()
 
-    plot_stats(args.json_file, args.outdir)
+    # plot_stats(args.json_file, args.outdir)
+
+    plot_stats(Path("logs/stats_20250902-143107.json"), "logs")

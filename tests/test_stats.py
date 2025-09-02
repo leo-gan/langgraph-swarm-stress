@@ -1,12 +1,12 @@
 # tests/test_stats.py
-import pytest
-from unittest.mock import MagicMock, patch, mock_open
-import time
-import json
 import csv
-from pathlib import Path
+import json
+from unittest.mock import MagicMock, patch
+
+import pytest
 
 from stress.stats import StatsMonitor
+
 
 @pytest.fixture
 def mock_swarm():
@@ -18,6 +18,7 @@ def mock_swarm():
         MagicMock(state={"done": False}),
     ]
     return swarm
+
 
 @pytest.fixture
 def stats_monitor(mock_swarm, tmp_path):
@@ -36,6 +37,7 @@ def test_stats_monitor_init(stats_monitor, mock_swarm, tmp_path):
     assert stats_monitor.start_time == 1000.0
     assert not stats_monitor._stop.is_set()
 
+
 def test_log_event(stats_monitor):
     """Test the log_event method."""
     with patch("time.time", return_value=1005.0):
@@ -49,14 +51,16 @@ def test_log_event(stats_monitor):
         "time_sec": 5.0,  # 1005.0 - 1000.0
     }
 
+
 def test_run_single_iteration(stats_monitor, mock_swarm):
     """Test a single iteration of the _run loop."""
-    with patch("time.time", side_effect=[1001.0, 1001.0]), \
-         patch("psutil.cpu_percent", return_value=50.5) as mock_cpu, \
-         patch("psutil.virtual_memory") as mock_mem, \
-         patch("time.sleep"), \
-         patch.object(stats_monitor._stop, "is_set", side_effect=[False, True]):
-
+    with (
+        patch("time.time", side_effect=[1001.0, 1001.0]),
+        patch("psutil.cpu_percent", return_value=50.5) as mock_cpu,
+        patch("psutil.virtual_memory") as mock_mem,
+        patch("time.sleep"),
+        patch.object(stats_monitor._stop, "is_set", side_effect=[False, True]),
+    ):
         mock_mem.return_value.percent = 75.5
 
         stats_monitor._run()
@@ -107,5 +111,15 @@ def test_save(stats_monitor, tmp_path):
         assert "cpu_percent" in reader.fieldnames
         assert "agent_id" in reader.fieldnames
         # Check data
-        assert rows[0] == {"event": "stats_tick", "time_sec": "1.0", "cpu_percent": "10", "agent_id": ""}
-        assert rows[1] == {"event": "agent_start", "time_sec": "1.1", "cpu_percent": "", "agent_id": "a1"}
+        assert rows[0] == {
+            "event": "stats_tick",
+            "time_sec": "1.0",
+            "cpu_percent": "10",
+            "agent_id": "",
+        }
+        assert rows[1] == {
+            "event": "agent_start",
+            "time_sec": "1.1",
+            "cpu_percent": "",
+            "agent_id": "a1",
+        }
