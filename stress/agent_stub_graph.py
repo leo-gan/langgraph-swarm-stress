@@ -9,13 +9,21 @@ class AgentState(TypedDict):
 
 
 class StubAgentGraph(StateGraph):
-    def __init__(self, agent_id: int, ttl: int, mem_mb: int, event_logger=None):
+    def __init__(
+        self,
+        agent_id: int,
+        ttl: int,
+        mem_mb: int,
+        event_logger=None,
+        handoff_tool=None,
+    ):
         super().__init__(state_schema=AgentState)
         self._agent_name = f"agent-{agent_id}"
         self.agent_id = agent_id
         self.ttl = ttl
         self.mem_mb = mem_mb
         self.event_logger = event_logger
+        self.handoff_tool = handoff_tool
         self.state = {"done": False}
 
         # Define the graph
@@ -45,6 +53,9 @@ class StubAgentGraph(StateGraph):
 
         # Simulate TTL
         time.sleep(self.ttl)
+
+        if self.handoff_tool:
+            self.handoff_tool()
 
         if self.event_logger:
             self.event_logger(

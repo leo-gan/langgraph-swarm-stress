@@ -39,23 +39,17 @@ def spawn_pattern(workflow, config):
         )
 
         for i in range(0, len(agents_list), burst_size):
-            batch = agents_list[i : i + burst_size]
-            for agent in batch:
-                agent["entrypoint"].invoke({})
+            # For each burst, start only the first agent.
+            # The rest will be started by the handoff chain.
+            first_agent_in_burst = agents_list[i]
+            first_agent_in_burst["entrypoint"].invoke({})
             time.sleep(interval)
 
     elif pattern_type == "linear":
-        start_time = params.get("start_time_sec", 0)
-        stop_time = params.get("stop_time_sec", 10)
-        total_agents = len(agents_list)
-        interval = (stop_time - start_time) / max(total_agents, 1)
-        logging.info(
-            f"[Swarm] Launching agents linearly from {start_time}s to {stop_time}s"
-        )
-
-        for idx, agent in enumerate(agents_list):
-            agent["entrypoint"].invoke({})
-            time.sleep(interval)
+        # In a linear pattern, agents are chained. We only need to start the first one.
+        logging.info("[Swarm] Launching agents in a linear chain")
+        if agents_list:
+            agents_list[0]["entrypoint"].invoke({})
 
     else:
         logging.warning(
