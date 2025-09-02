@@ -1,0 +1,70 @@
+[2025-09-02 19:23:50,092] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:23:50,092] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:24:11,912] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:24:11,912] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:24:51,525] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:24:51,525] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:25:19,213] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:25:19,214] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:25:40,651] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:25:40,651] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:25:40,661] INFO: [Swarm] Launching agents in bursts: 5 every 3s
+[2025-09-02 19:26:00,521] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:26:00,521] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:26:00,532] INFO: [Swarm] Launching agents in bursts: 5 every 3s
+[2025-09-02 19:26:37,400] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:26:37,400] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:26:37,410] INFO: [Swarm] Launching agents in bursts: 5 every 3s
+[2025-09-02 19:31:30,401] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:31:30,402] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:31:54,118] INFO: === Starting LangGraph Swarm Stress Test ===
+[2025-09-02 19:31:54,119] INFO: [Swarm] Starting with 20 agents
+[2025-09-02 19:31:54,129] INFO: [Swarm] Launching agents in bursts: 5 every 3s
+[2025-09-02 19:31:54,132] INFO: [Stats] t=0.0s | Active=20/20 | CPU=0.0% | MEM=5.2%
+[2025-09-02 19:31:59,133] INFO: [Stats] t=5.0s | Active=20/20 | CPU=4.0% | MEM=6.6%
+[2025-09-02 19:32:04,134] INFO: [Stats] t=10.0s | Active=20/20 | CPU=0.0% | MEM=6.6%
+[2025-09-02 19:32:09,135] INFO: [Stats] t=15.0s | Active=19/20 | CPU=9.0% | MEM=8.9%
+[2025-09-02 19:32:14,136] INFO: [Stats] t=20.0s | Active=19/20 | CPU=0.0% | MEM=8.9%
+[2025-09-02 19:32:19,137] INFO: [Stats] t=25.0s | Active=19/20 | CPU=0.0% | MEM=8.9%
+[2025-09-02 19:32:24,138] INFO: [Stats] t=30.0s | Active=18/20 | CPU=1.5% | MEM=8.3%
+[2025-09-02 19:32:29,138] INFO: [Stats] t=35.0s | Active=18/20 | CPU=0.1% | MEM=8.3%
+[2025-09-02 19:32:34,139] INFO: [Stats] t=40.0s | Active=17/20 | CPU=1.1% | MEM=7.9%
+[2025-09-02 19:32:39,140] INFO: [Stats] t=45.0s | Active=16/20 | CPU=1.0% | MEM=7.9%
+[2025-09-02 19:32:44,141] INFO: [Stats] t=50.0s | Active=16/20 | CPU=0.0% | MEM=7.9%
+[2025-09-02 19:32:49,142] INFO: [Stats] t=55.0s | Active=16/20 | CPU=0.0% | MEM=7.9%
+[2025-09-02 19:32:54,143] INFO: [Stats] t=60.0s | Active=15/20 | CPU=1.0% | MEM=7.9%
+[2025-09-02 19:32:59,144] INFO: [Stats] t=65.0s | Active=15/20 | CPU=0.0% | MEM=7.9%
+[2025-09-02 19:33:04,145] INFO: [Stats] t=70.0s | Active=15/20 | CPU=0.2% | MEM=7.9%
+[2025-09-02 19:33:09,146] INFO: [Stats] t=75.0s | Active=14/20 | CPU=0.6% | MEM=6.6%
+[2025-09-02 19:33:14,146] INFO: [Stats] t=80.0s | Active=14/20 | CPU=0.0% | MEM=6.6%
+[2025-09-02 19:33:19,147] INFO: [Stats] t=85.0s | Active=14/20 | CPU=0.0% | MEM=6.6%
+[2025-09-02 19:33:24,148] INFO: [Stats] t=90.0s | Active=13/20 | CPU=1.1% | MEM=8.7%
+[2025-09-02 19:33:29,149] INFO: [Stats] t=95.0s | Active=12/20 | CPU=0.8% | MEM=7.0%
+[2025-09-02 19:33:34,150] INFO: [Stats] t=100.0s | Active=12/20 | CPU=0.1% | MEM=7.0%
+[2025-09-02 19:33:39,214] INFO: [Stats] t=105.1s | Active=11/20 | CPU=0.6% | MEM=6.9%
+[2025-09-02 19:33:44,214] INFO: [Stats] t=110.1s | Active=11/20 | CPU=0.0% | MEM=6.9%
+[2025-09-02 19:33:49,216] INFO: [Stats] t=115.1s | Active=11/20 | CPU=0.0% | MEM=6.9%
+[2025-09-02 19:33:54,216] INFO: [Stats] t=120.1s | Active=10/20 | CPU=0.2% | MEM=6.0%
+[2025-09-02 19:33:59,217] INFO: [Stats] t=125.1s | Active=10/20 | CPU=1.1% | MEM=8.6%
+[2025-09-02 19:34:04,219] INFO: [Stats] t=130.1s | Active=9/20 | CPU=1.3% | MEM=7.6%
+[2025-09-02 19:34:09,220] INFO: [Stats] t=135.1s | Active=9/20 | CPU=0.1% | MEM=7.6%
+[2025-09-02 19:34:14,220] INFO: [Stats] t=140.1s | Active=8/20 | CPU=0.9% | MEM=8.0%
+[2025-09-02 19:34:19,221] INFO: [Stats] t=145.1s | Active=8/20 | CPU=0.0% | MEM=8.0%
+[2025-09-02 19:34:24,222] INFO: [Stats] t=150.1s | Active=7/20 | CPU=1.2% | MEM=8.9%
+[2025-09-02 19:34:29,223] INFO: [Stats] t=155.1s | Active=6/20 | CPU=1.2% | MEM=8.5%
+[2025-09-02 19:34:34,224] INFO: [Stats] t=160.1s | Active=5/20 | CPU=0.3% | MEM=6.5%
+[2025-09-02 19:34:39,225] INFO: [Stats] t=165.1s | Active=5/20 | CPU=0.4% | MEM=6.6%
+[2025-09-02 19:34:44,225] INFO: [Stats] t=170.1s | Active=5/20 | CPU=0.0% | MEM=6.6%
+[2025-09-02 19:34:49,226] INFO: [Stats] t=175.1s | Active=4/20 | CPU=0.9% | MEM=8.3%
+[2025-09-02 19:34:54,227] INFO: [Stats] t=180.1s | Active=4/20 | CPU=0.0% | MEM=8.3%
+[2025-09-02 19:34:59,228] INFO: [Stats] t=185.1s | Active=4/20 | CPU=0.1% | MEM=8.3%
+[2025-09-02 19:35:04,229] INFO: [Stats] t=190.1s | Active=3/20 | CPU=1.0% | MEM=7.6%
+[2025-09-02 19:35:09,230] INFO: [Stats] t=195.1s | Active=2/20 | CPU=1.2% | MEM=8.3%
+[2025-09-02 19:35:14,231] INFO: [Stats] t=200.1s | Active=2/20 | CPU=0.0% | MEM=8.3%
+[2025-09-02 19:35:19,232] INFO: [Stats] t=205.1s | Active=1/20 | CPU=1.3% | MEM=8.6%
+[2025-09-02 19:35:24,233] INFO: [Stats] t=210.1s | Active=1/20 | CPU=0.0% | MEM=8.6%
+[2025-09-02 19:35:29,234] INFO: [Stats] t=215.1s | Active=1/20 | CPU=0.0% | MEM=8.6%
+[2025-09-02 19:35:34,234] INFO: [Stats] t=220.1s | Active=0/20 | CPU=0.3% | MEM=6.2%
+[2025-09-02 19:35:39,238] INFO: [Stats] Saved results to logs/stats_20250902-193539.json and logs/stats_20250902-193539.csv
+[2025-09-02 19:35:39,238] INFO: [Swarm] Finished all agents
+[2025-09-02 19:35:39,238] INFO: === Finished LangGraph Swarm Stress Test ===

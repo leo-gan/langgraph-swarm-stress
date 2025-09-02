@@ -1,10 +1,12 @@
-from langgraph.graph import StateGraph
-from langgraph.prebuilt import ToolNode
-from typing_extensions import TypedDict
 import time
+
+from langgraph.graph import StateGraph
+from typing_extensions import TypedDict
+
 
 class AgentState(TypedDict):
     done: bool
+
 
 class StubAgentGraph(StateGraph):
     def __init__(self, agent_id: int, ttl: int, mem_mb: int, event_logger=None):
@@ -14,6 +16,7 @@ class StubAgentGraph(StateGraph):
         self.ttl = ttl
         self.mem_mb = mem_mb
         self.event_logger = event_logger
+        self.state = {"done": False}
 
         # Define the graph
         self.add_node("run", self.run)
@@ -27,37 +30,50 @@ class StubAgentGraph(StateGraph):
     def run(self, state: dict):
         """LangGraph node for agent execution"""
         if self.event_logger:
-            self.event_logger({
-                "event": "agent_start",
-                "agent_id": self.agent_id,
-                "ttl": self.ttl,
-                "memory": self.mem_mb,
-                "time_sec": time.time()
-            })
+            self.event_logger(
+                {
+                    "event": "agent_start",
+                    "agent_id": self.agent_id,
+                    "ttl": self.ttl,
+                    "memory": self.mem_mb,
+                    "time_sec": time.time(),
+                }
+            )
 
         # Consume memory (dummy)
-        dummy = [0] * (self.mem_mb * 250_000)
+        dummy = [0] * (self.mem_mb * 250_000)  # noqa
 
         # Simulate TTL
         time.sleep(self.ttl)
 
         if self.event_logger:
-            self.event_logger({
-                "event": "agent_stop",
-                "agent_id": self.agent_id,
-                "ttl": self.ttl,
-                "memory": self.mem_mb,
-                "time_sec": time.time()
-            })
+            self.event_logger(
+                {
+                    "event": "agent_stop",
+                    "agent_id": self.agent_id,
+                    "ttl": self.ttl,
+                    "memory": self.mem_mb,
+                    "time_sec": time.time(),
+                }
+            )
 
         state["done"] = True
+        self.state = state
         return {"status": "done"}
+
+    def get_graph(self):
+        return self
+
+    def __call__(self, state, **kwargs):
+        return self.compile().invoke(state, **kwargs)
 
     def compile(self, **kwargs):
         """Compile the graph with default settings if none provided"""
-        return super().compile(**{
-            'checkpointer': None,
-            'interrupt_before': None,
-            'interrupt_after': None,
-            **kwargs
-        })
+        return super().compile(
+            **{
+                "checkpointer": None,
+                "interrupt_before": None,
+                "interrupt_after": None,
+                **kwargs,
+            }
+        )

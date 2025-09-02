@@ -19,6 +19,7 @@ classifiers = [
 ]
 dependencies = [
     "langgraph-swarm>=0.0.14",
+    "matplotlib>=3.10.6",
     "psutil>=5.9.0",
 ]
 
