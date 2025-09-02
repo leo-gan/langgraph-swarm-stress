@@ -1,0 +1,63 @@
+from langgraph.graph import StateGraph
+from langgraph.prebuilt import ToolNode
+from typing_extensions import TypedDict
+import time
+
+class AgentState(TypedDict):
+    done: bool
+
+class StubAgentGraph(StateGraph):
+    def __init__(self, agent_id: int, ttl: int, mem_mb: int, event_logger=None):
+        super().__init__(state_schema=AgentState)
+        self._agent_name = f"agent-{agent_id}"
+        self.agent_id = agent_id
+        self.ttl = ttl
+        self.mem_mb = mem_mb
+        self.event_logger = event_logger
+
+        # Define the graph
+        self.add_node("run", self.run)
+        self.set_entry_point("run")
+        self.set_finish_point("run")
+
+    @property
+    def name(self):
+        return self._agent_name
+
+    def run(self, state: dict):
+        """LangGraph node for agent execution"""
+        if self.event_logger:
+            self.event_logger({
+                "event": "agent_start",
+                "agent_id": self.agent_id,
+                "ttl": self.ttl,
+                "memory": self.mem_mb,
+                "time_sec": time.time()
+            })
+
+        # Consume memory (dummy)
+        dummy = [0] * (self.mem_mb * 250_000)
+
+        # Simulate TTL
+        time.sleep(self.ttl)
+
+        if self.event_logger:
+            self.event_logger({
+                "event": "agent_stop",
+                "agent_id": self.agent_id,
+                "ttl": self.ttl,
+                "memory": self.mem_mb,
+                "time_sec": time.time()
+            })
+
+        state["done"] = True
+        return {"status": "done"}
+
+    def compile(self, **kwargs):
+        """Compile the graph with default settings if none provided"""
+        return super().compile(**{
+            'checkpointer': None,
+            'interrupt_before': None,
+            'interrupt_after': None,
+            **kwargs
+        })
