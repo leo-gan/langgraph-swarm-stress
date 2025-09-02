@@ -74,7 +74,7 @@ def plot_stats(json_file: Path, outdir: Path = None):
 
     import matplotlib.patches as mpatches
     span_patch = mpatches.Patch(color="green", alpha=0.1, label="Agent Lifetime")
-    ax1.legend(handles=legend.legendHandles + [span_patch], loc="upper right")
+    ax1.legend(handles=legend.legend_handles + [span_patch], loc="upper right")
 
     plt.title(f"Swarm Stress Test: {json_file.stem}")
     plt.tight_layout()

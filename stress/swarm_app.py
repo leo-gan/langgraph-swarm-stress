@@ -18,25 +18,29 @@ class LGAgent:
 from stress.stats import StatsMonitor
 from stress.agent_stub_graph import StubAgentGraph  # <-- use StateGraph wrapper
 
-def build_agents(config, stats):
+def build_agents(config):
     agents = []
     for i in range(config["num_agents"]):
         ttl = random.randint(*config["ttl_range"])
         mem = random.randint(*config["memory_range"])
-        agent = StubAgentGraph(i, ttl, mem, event_logger=stats.log_event)
+        agent = StubAgentGraph(i, ttl, mem, event_logger=None)
         agents.append(agent)
     return agents
 
 def run_swarm(config):
     logging.info(f"[Swarm] Starting with {config['num_agents']} agents")
 
+    agents = build_agents(config)
+
     stats = StatsMonitor(
-        swarm=None,
+        swarm=agents,
         interval=config.get("stats_interval", 5),
         outdir=config.get("log_dir", "logs"),
     )
 
-    agents = build_agents(config, stats)
+    # Set event logger for each agent
+    for agent in agents:
+        agent.event_logger = stats.log_event
 
     # Create LangGraph swarm workflow using proper agent objects
     workflow = create_swarm(
@@ -46,14 +50,13 @@ def run_swarm(config):
 
     app = workflow.compile(checkpointer=None)
 
-    stats.swarm = app
     stats.start()
 
     # Start agent spawning pattern
     spawn_pattern(workflow, config)
 
     # Wait until all agents finish
-    while any(not a.stub.state.get("done", False) for a in agents):
+    while any(not a.state.get("done", False) for a in agents):
         time.sleep(1)
 
     stats.stop()

@@ -14,6 +14,7 @@ class StubAgentGraph(StateGraph):
         self.ttl = ttl
         self.mem_mb = mem_mb
         self.event_logger = event_logger
+        self.state = {"done": False}
 
         # Define the graph
         self.add_node("run", self.run)
@@ -51,7 +52,14 @@ class StubAgentGraph(StateGraph):
             })
 
         state["done"] = True
+        self.state = state
         return {"status": "done"}
+
+    def get_graph(self):
+        return self
+
+    def __call__(self, state, **kwargs):
+        return self.compile().invoke(state, **kwargs)
 
     def compile(self, **kwargs):
         """Compile the graph with default settings if none provided"""

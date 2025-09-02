@@ -31,8 +31,8 @@ class StatsMonitor:
     def _run(self):
         while not self._stop.is_set():
             elapsed = time.time() - self.start_time
-            active = sum(1 for a in self.swarm.agents if not a.state.get("done"))
-            total = len(self.swarm.agents)
+            active = sum(1 for a in self.swarm if not a.state.get("done"))
+            total = len(self.swarm)
 
             cpu = psutil.cpu_percent(interval=None)
             mem = psutil.virtual_memory().percent

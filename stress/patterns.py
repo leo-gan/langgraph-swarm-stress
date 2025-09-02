@@ -15,13 +15,21 @@ def spawn_pattern(workflow, config):
     pattern_type = pattern.get("type", "all_at_once")
     params = pattern.get("params", {})
 
-    agents_list = workflow.agents_list  # list of agent dicts with 'id' and 'entrypoint'
+    # Adapt to new langgraph_swarm which doesn't have .agents_list
+    # The nodes of the swarm graph are the agents.
+    agents_list = []
+    for name, agent_node_spec in workflow.nodes.items():
+        # Heuristic to identify agent nodes
+        if "agent-" in name:
+            # The value is a StateNodeSpec, the runnable is at .runnable
+            agents_list.append({"id": name, "entrypoint": agent_node_spec.runnable})
+
 
     if pattern_type == "all_at_once":
         logging.info(f"[Swarm] Launching all {len(agents_list)} agents at once")
         for agent in agents_list:
             # call agent entrypoint asynchronously if needed
-            agent["entrypoint"]({})
+            agent["entrypoint"].invoke({})
 
     elif pattern_type == "bursts":
         burst_size = params.get("agents_per_burst", 5)
@@ -31,7 +39,7 @@ def spawn_pattern(workflow, config):
         for i in range(0, len(agents_list), burst_size):
             batch = agents_list[i:i + burst_size]
             for agent in batch:
-                agent["entrypoint"]({})
+                agent["entrypoint"].invoke({})
             time.sleep(interval)
 
     elif pattern_type == "linear":
@@ -42,10 +50,10 @@ def spawn_pattern(workflow, config):
         logging.info(f"[Swarm] Launching agents linearly from {start_time}s to {stop_time}s")
 
         for idx, agent in enumerate(agents_list):
-            agent["entrypoint"]({})
+            agent["entrypoint"].invoke({})
             time.sleep(interval)
 
     else:
         logging.warning(f"[Swarm] Unknown pattern type '{pattern_type}', defaulting to all_at_once")
         for agent in agents_list:
-            agent["entrypoint"]({})
+            agent["entrypoint"].invoke({})
