@@ -4,21 +4,9 @@ import time
 
 from langgraph_swarm import create_swarm
 
-from stress.agent_stub import StubAgent
 from stress.agent_stub_graph import StubAgentGraph
 from stress.patterns import spawn_pattern
 from stress.stats import StatsMonitor
-
-
-class LGAgent:
-    """Wrapper for a stub agent to work with LangGraph Swarm"""
-
-    def __init__(self, stub_agent: StubAgent, name: str):
-        self.stub = stub_agent
-        self.name = name
-
-    def __call__(self, state: dict):
-        return self.stub.act(state)
 
 
 def build_agents(config):

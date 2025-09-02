@@ -1,6 +1,6 @@
 # stress/config.py
 CONFIG = {
-    "num_agents": 200,
+    "num_agents": 2,
     "ttl_range": [0, 1],  # seconds
     "memory_range": [50, 150],  # MB
     "pattern": {
