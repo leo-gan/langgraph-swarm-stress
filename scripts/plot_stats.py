@@ -92,13 +92,12 @@ def plot_stats(json_file: Path, outdir: Path = None):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Plot swarm stress stats")
+    # parser = argparse.ArgumentParser(description="Plot swarm stress stats")
+    #
     # parser.add_argument("json_file", type=Path, help="Path to stats JSON log")
-    parser.add_argument(
-        "--outdir", type=Path, help="Directory to save plot instead of showing it"
-    )
-    args = parser.parse_args()
-
+    # parser.add_argument(
+    #     "--outdir", type=Path, help="Directory to save plot instead of showing it"
+    # )
+    # args = parser.parse_args()
     # plot_stats(args.json_file, args.outdir)
-
-    plot_stats(Path("logs/stats_20250902-143107.json"), "logs")
+    plot_stats(Path("logs/stats_20250903-140519.json"), "logs")

@@ -42,6 +42,7 @@ class StubAgentGraph(StateGraph):
 
     def run(self, state: dict):
         """LangGraph node for agent execution"""
+        print(f"Agent {self.agent_id} running: {state=}")
         if self.event_logger:
             self.event_logger(
                 {
@@ -54,7 +55,7 @@ class StubAgentGraph(StateGraph):
             )
 
         # Consume memory (dummy)
-        dummy = [0] * (self.mem_mb * 250_000)  # noqa
+        dummy = bytearray(self.mem_mb * 1024 * 1024)  # noqa
 
         # Simulate TTL
         time.sleep(self.ttl)

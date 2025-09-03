@@ -1,10 +1,10 @@
 # stress/config.py
 CONFIG = {
-    "num_agents": 2,
-    "ttl_range": [0, 1],  # seconds
+    "num_agents": 3,
+    "ttl_range": [1, 3],  # seconds
     "memory_range": [50, 150],  # MB
     "pattern": {
-        "type": "all_at_once",  # all_at_once | bursts | linear
+        "type": "linear",  # all_at_once | bursts | linear
         "params": {"agents_per_burst": 5, "burst_interval": 3},
     },
     "log_level": "INFO",
