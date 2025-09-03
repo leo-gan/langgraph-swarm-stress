@@ -23,7 +23,7 @@ def build_agents(config):
                 i, ttl, mem, event_logger=None, handoff_tool=next_agent_tool
             )
             agents.insert(0, agent)
-            next_agent_tool = create_handoff_tool(agent)
+            next_agent_tool = create_handoff_tool(agent_name=agent.name)
     elif pattern_type == "bursts":
         burst_size = pattern_config.get("params", {}).get("agents_per_burst", 5)
         num_agents = config["num_agents"]
@@ -43,7 +43,7 @@ def build_agents(config):
                     handoff_tool=next_agent_tool,
                 )
                 burst_agents.insert(0, agent)
-                next_agent_tool = create_handoff_tool(agent)
+                next_agent_tool = create_handoff_tool(agent_name=agent.name)
             agents.extend(burst_agents)
     else:
         # Create agents without handoff tools

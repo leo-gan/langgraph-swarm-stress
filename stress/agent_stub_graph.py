@@ -55,7 +55,7 @@ class StubAgentGraph(StateGraph):
         time.sleep(self.ttl)
 
         if self.handoff_tool:
-            self.handoff_tool()
+            self.handoff_tool.invoke({})
 
         if self.event_logger:
             self.event_logger(
