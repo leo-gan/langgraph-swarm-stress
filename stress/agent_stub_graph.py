@@ -1,4 +1,5 @@
 import time
+import uuid
 
 from langgraph.graph import StateGraph
 from typing_extensions import TypedDict
@@ -55,7 +56,13 @@ class StubAgentGraph(StateGraph):
         time.sleep(self.ttl)
 
         if self.handoff_tool:
-            self.handoff_tool.invoke({})
+            tool_call = {
+                "name": self.handoff_tool.name,
+                "args": {},
+                "type": "tool_call",
+                "tool_call_id": str(uuid.uuid4()),
+            }
+            self.handoff_tool.invoke(tool_call)
 
         if self.event_logger:
             self.event_logger(
