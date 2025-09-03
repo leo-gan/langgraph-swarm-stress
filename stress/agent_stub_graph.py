@@ -5,7 +5,11 @@ from langgraph.graph import StateGraph
 from typing_extensions import TypedDict
 
 
+from langchain_core.messages import ToolMessage
+
+
 class AgentState(TypedDict):
+    tool_calls: list[ToolMessage]
     done: bool
 
 
@@ -25,7 +29,7 @@ class StubAgentGraph(StateGraph):
         self.mem_mb = mem_mb
         self.event_logger = event_logger
         self.handoff_tool = handoff_tool
-        self.state = {"done": False}
+        self.state = {"done": False, "tool_calls": []}
 
         # Define the graph
         self.add_node("run", self.run)
@@ -60,9 +64,10 @@ class StubAgentGraph(StateGraph):
                 "name": self.handoff_tool.name,
                 "args": {},
                 "type": "tool_call",
-                "tool_call_id": str(uuid.uuid4()),
+                "id": str(uuid.uuid4()),
             }
-            self.handoff_tool.invoke(tool_call)
+            self.state["tool_calls"] = [tool_call]
+            return {"tool_calls": [tool_call]}
 
         if self.event_logger:
             self.event_logger(
@@ -77,7 +82,7 @@ class StubAgentGraph(StateGraph):
 
         state["done"] = True
         self.state = state
-        return {"status": "done"}
+        return {"done": True}
 
     def get_graph(self):
         return self
